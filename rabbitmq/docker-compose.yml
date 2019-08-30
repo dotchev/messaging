@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  rabbit:
+    image: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672 # management plugin
+    networks:
+      - messaging
+  # producer:
+  #   build: producer
+  #   networks:
+  #     - messaging
+  # consumer:
+  #   build: consumer
+  #   networks:
+  #     - messaging
+networks:
+  messaging:
