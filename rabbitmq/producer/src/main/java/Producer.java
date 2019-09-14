@@ -1,4 +1,5 @@
-import java.rmi.ConnectIOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -38,7 +39,8 @@ public class Producer {
         connect();
         String message = "M" + counter++;
         channel.basicPublish("", QUEUE_NAME, null, message.getBytes("UTF-8"));
-        System.out.println("Sent message: " + message);
+        String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date());
+        System.out.println(time + " Sent message: " + message);
       } catch (Exception e) {
         e.printStackTrace();
       }
