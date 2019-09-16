@@ -11,7 +11,7 @@ services:
     build: producer
     environment:
       RABBITMQ_HOST: rabbit
-      QUEUE_NAME: messages
+      QUEUE_NAME: tasks
       MESSAGE_PERIOD: 2000
     networks:
       - messaging
@@ -19,7 +19,7 @@ services:
     build: consumer
     environment:
       RABBITMQ_HOST: rabbit
-      QUEUE_NAME: messages
+      QUEUE_NAME: tasks
     networks:
       - messaging
 networks:

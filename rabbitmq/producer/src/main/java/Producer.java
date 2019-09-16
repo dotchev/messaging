@@ -37,7 +37,7 @@ public class Producer {
     public void run() {
       try {
         connect();
-        String message = "M" + counter++;
+        String message = "T" + counter++;
         channel.basicPublish("", QUEUE_NAME, null, message.getBytes("UTF-8"));
         String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date());
         System.out.println(time + " Sent message: " + message);
