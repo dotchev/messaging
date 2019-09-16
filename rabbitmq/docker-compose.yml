@@ -9,8 +9,6 @@ services:
       - messaging
   producer:
     build: producer
-    volumes:
-      - maven-cache:/root/.m2
     environment:
       RABBITMQ_HOST: rabbit
       QUEUE_NAME: messages
@@ -19,14 +17,10 @@ services:
       - messaging
   consumer:
     build: consumer
-    volumes:
-      - maven-cache:/root/.m2
     environment:
       RABBITMQ_HOST: rabbit
       QUEUE_NAME: messages
     networks:
       - messaging
-volumes:
-  maven-cache:
 networks:
   messaging:

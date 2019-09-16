@@ -1,5 +1,4 @@
 FROM maven
-RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 COPY pom.xml .
 RUN mvn dependency:go-offline
