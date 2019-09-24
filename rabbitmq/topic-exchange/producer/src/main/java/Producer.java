@@ -2,6 +2,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.stream.LongStream;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -17,6 +18,11 @@ public class Producer {
     private Connection connection;
     private Channel channel;
     private long counter = 0;
+
+    private boolean isPrime(long number) {
+      return number > 2 && 
+        LongStream.rangeClosed(2, (long) Math.sqrt(number)).noneMatch(n -> (number % n == 0));
+    }
 
     private Channel connect() throws Exception {
       if (channel != null && channel.isOpen()) {
@@ -37,7 +43,12 @@ public class Producer {
     public void run() {
       try {
         connect();
-        String routingKey = (counter % 2 == 0) ? "number.even" : "number.odd";
+        String routingKey;
+        if (counter % 2 == 0) {
+           routingKey = "number.even";
+        } else {
+          routingKey = "number.odd." + (isPrime(counter) ? "prime" : "composite");
+        }
         String message = "E" + counter++;
         channel.basicPublish(EXCHANGE_NAME, routingKey, null, message.getBytes("UTF-8"));
         String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date());
@@ -61,3 +72,4 @@ public class Producer {
     timer.scheduleAtFixedRate(task, period, period);
   }
 }
+
