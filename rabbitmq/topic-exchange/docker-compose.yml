@@ -20,15 +20,15 @@ services:
     environment:
       RABBITMQ_HOST: rabbit
       EXCHANGE_NAME: events
-      BINDING_KEY: number.odd
+      BINDING_KEY: number.odd.*
     networks:
       - messaging
-  even-consumer:
+  prime-consumer:
     build: consumer
     environment:
       RABBITMQ_HOST: rabbit
       EXCHANGE_NAME: events
-      BINDING_KEY: number.even
+      BINDING_KEY: number.odd.prime
     networks:
       - messaging
 networks:
