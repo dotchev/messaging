@@ -8,3 +8,4 @@ Messaging course
 ### RabbitMQ
 * [Worker Queue](rabbitmq/worker-queue)
 * [Publish/Subscribe](rabbitmq/pub-sub)
+* [Topics](rabbitmq/topics)
