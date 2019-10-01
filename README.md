@@ -5,4 +5,5 @@ Messaging course
 * Recent version of docker
 
 ## Examples
-* [Direct Exchange](direct-exchange)
+### RabbitMQ
+* [Direct Exchange](rabbitmq/direct-exchange)
