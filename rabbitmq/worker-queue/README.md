@@ -1,13 +1,15 @@
- # Direct Exchange
+# Worker Queue
 
- This example uses the default direct exchange of RabbitMQ. Every queue is automatically bound to it with a routing key which is the same as the queue name.
+This example demonstrates the worker queue use-case where one application creates tasks and another one executes them.
 
- The example starts 3 applications:
- * RabbitMQ - the message broker
- * Producer - publishes a new task in the queue on regular intervals, see [Producer.java](producer/src/main/java/Producer.java)
- * Consumer - listens for tasks on the queue and prints them on the console, see [Consumer.java](consumer/src/main/java/Consumer.java)
- 
- See [docker-compose.yml](docker-compose.yml)
+Here we use the default direct exchange of RabbitMQ. Every queue is automatically bound to it with a routing key which is the same as the queue name.
+
+The example starts 3 applications:
+* RabbitMQ - the message broker
+* Producer - publishes a new task in the queue on regular intervals, see [Producer.java](producer/src/main/java/Producer.java)
+* Consumer - listens for tasks on the queue and prints them on the console, see [Consumer.java](consumer/src/main/java/Consumer.java)
+
+See [docker-compose.yml](docker-compose.yml)
 
 Start the example:
 ```sh

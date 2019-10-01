@@ -6,4 +6,4 @@ Messaging course
 
 ## Examples
 ### RabbitMQ
-* [Direct Exchange](rabbitmq/direct-exchange)
+* [Worker Queue](rabbitmq/worker-queue)
