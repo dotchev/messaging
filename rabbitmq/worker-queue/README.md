@@ -2,7 +2,7 @@
 
 This example demonstrates the worker queue use-case where one application creates tasks and another one executes them.
 
-Here we use the default direct exchange of RabbitMQ. Every queue is automatically bound to it with a routing key which is the same as the queue name.
+Here we use the [default direct exchange](https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchange-default) of RabbitMQ. Every queue is automatically bound to it with a routing key which is the same as the queue name.
 
 The example starts 3 applications:
 * RabbitMQ - the message broker
@@ -27,7 +27,7 @@ producer_1  | 2019-09-25 19:37:12.260 Sent message: T5
 consumer_1  | 2019-09-25 19:37:12.265 Received message: T5
 ```
 
-Stop the consumer (run in a separate consoler):
+Stop the consumer (run in a separate console):
 ```sh
 docker-compose stop consumer
 ```
@@ -42,7 +42,7 @@ Scale the consumer to run with 2 instances:
 ```sh
 docker-compose up --scale consumer=2 -d
 ```
-Noticed that messages are dispatched to different consumers.
+Notice that messages are dispatched to different consumers.
 ```
 producer_1  | 2019-09-25 19:57:23.922 Sent message: T26
 consumer_1  | 2019-09-25 19:57:23.924 Received message: T26
