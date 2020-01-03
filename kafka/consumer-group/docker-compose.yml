@@ -1,0 +1,36 @@
+version: '2.4'
+services:
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: wurstmeister/kafka
+    scale: 2
+    ports:
+      - "9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: ${HOST_IP:?HOST_IP not set}
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'
+      KAFKA_CREATE_TOPICS: 'messages:2:1'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  producer:
+    build: ../producer
+    environment:
+      BOOTSTRAP_SERVERS: kafka:9092
+      TOTAL_MESSAGES: 10000
+      KEY_GROUPS: 4
+      MESSAGE_DELAY_MS: 2000
+      TOPIC: messages
+
+  consumer:
+    build: ../consumer
+    environment:
+      BOOTSTRAP_SERVERS: kafka:9092
+      GROUP_ID: consumer
+      TOPIC: messages
