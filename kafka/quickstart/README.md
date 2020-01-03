@@ -82,3 +82,8 @@ docker stop quickstart_kafka_3
 You may need to change the container name to match the topic leader.
 From the Kafka shell describe again the topic. Notice that now another broker is the leader. The stopped broker is still listed in `Replicas:` but is removed from `Isr:`.
 The messages are still available. Start again the console consumer and you should see the old messages.
+
+Cleanup from the OS shell:
+```sh
+docker-compose down
+```

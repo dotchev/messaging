@@ -53,3 +53,8 @@ producer_1  | 2019-10-01 19:36:05.965 Sent message: E18
 consumer_2  | 2019-10-01 19:36:05.969 Received message: E18
 consumer_1  | 2019-10-01 19:36:05.969 Received message: E18
 ```
+
+Cleanup:
+```sh
+docker-compose down
+```

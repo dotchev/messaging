@@ -54,3 +54,8 @@ producer_1  | 2019-09-25 19:57:38.924 Sent message: T29
 consumer_2  | 2019-09-25 19:57:38.930 Received message: T29
 ```
 The reason is that both consumers read from the same queue. This pattern can be used to load balance tasks between multiple consumers.
+
+Cleanup:
+```sh
+docker-compose down
+```

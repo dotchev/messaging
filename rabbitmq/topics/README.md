@@ -26,6 +26,11 @@ producer_1        | 2019-10-01 20:05:52.590 Sent message: E8 (number.even)
 producer_1        | 2019-10-01 20:05:57.591 Sent message: E9 (number.odd.composite)
 odd-consumer_1    | 2019-10-01 20:05:57.593 Received message: E9
 ```
-Notice that _odd-consumer_ receives events with both topics `number.odd.prime` and `number.odd.composite`, 
+Notice that _odd-consumer_ receives events with both topics `number.odd.prime` and `number.odd.composite`,
 while _prime-consumer_ receives only events with topic `number.odd.prime`.
 Events with topic `number.even` are ignored because no queue binding matches it.
+
+Cleanup:
+```sh
+docker-compose down
+```
