@@ -28,7 +28,7 @@ public class Consumer {
 		config.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, LongDeserializer.class.getName());
 		config.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
 		config.setProperty(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID);
-		config.setProperty(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
+//		config.setProperty(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
 
 		logger.info("Connecting to Kafka at {}...", BOOTSTRAP_SERVERS);
 		try (KafkaConsumer<Long, String> consumer = new KafkaConsumer<>(config)) {
@@ -48,6 +48,7 @@ public class Consumer {
 				} else {
 					logger.info("Received {} records:\n{}", r.size(), String.join("\n", r));
 				}
+				consumer.commitSync(); // all records from last poll are consumed
 			}
 		}
 
