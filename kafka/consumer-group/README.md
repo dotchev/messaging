@@ -13,7 +13,7 @@ Build the example code:
 mvn package -f ../pom.xml
 ```
 
-The example starts 3 applications:
+The example starts 4 applications:
 * ZooKeeper
 * Kafka
 * Producer
@@ -50,7 +50,7 @@ Start again the consumer:
 ```sh
 docker-compose start consumer
 ```
-Notice that the consumer continue from the point it left.
+Notice that the consumer resumes from the point it left.
 It receives in a batch the messages that were published while it was down.
 So the consumer is able to catch up quickly with the producer.
 
