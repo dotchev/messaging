@@ -4,7 +4,7 @@ This example demonstrates the publish subscribe use-case where consumer applicat
 
 Here we use the [topic exchange](https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchange-topic) of RabbitMQ. This exchange broadcasts each message to all queues with binding key that matches the message routing key (a.k.a. topic).
 
-The example starts 3 applications:
+The example starts 4 applications:
 * RabbitMQ - the message broker
 * Producer - publishes a new event to the exchange on regular intervals, events are published with different topics (`number.even` / `number.odd.prime` / `number.odd.composite`), see [Producer.java](producer/src/main/java/Producer.java)
 * Odd Consumer - creates a new queue and binds it to the exchange with binding key `number.odd.*`, then it listens for events on the queue and prints them on the console, see [Consumer.java](consumer/src/main/java/Consumer.java)
