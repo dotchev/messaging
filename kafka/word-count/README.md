@@ -44,12 +44,12 @@ In a few seconds when the start is complete.
 
 Start the producer in a separate console:
 ```sh
-doco exec kafka kafka-console-producer.sh --broker-list localhost:9092 --topic chat
+docker-compose exec kafka kafka-console-producer.sh --broker-list localhost:9092 --topic chat
 ```
 
 Start the consumer in a separate console:
 ```sh
-doco exec kafka kafka-console-consumer.sh \
+docker-compose exec kafka kafka-console-consumer.sh \
     --bootstrap-server localhost:9092 \
     --topic word-count \
     --from-beginning \
@@ -65,7 +65,7 @@ Each message in the output topic provides the latest count of a specific word.
 
 Scale the stream processor to run with multiple instances:
 ```sh
-doco scale word-count=4
+docker-compose scale word-count=4
 ```
 
 Write again some text in the producer.
@@ -75,11 +75,11 @@ The reason is that Kafka assigns different partitions to different application i
 The output topic partition is selected based on the message key, which is the word.
 
 Kafka automatically reassigns partitions across available application instances.
-This allows stream processors to handle higher load and provides fault tolerance.
+This provides stream processors with scalability and fault tolerance.
 
 Check the partition assignments across consumer instances:
 ```sh
-doco exec kafka kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe --all-groups
+docker-compose exec kafka kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe --all-groups
 ```
 
 Cleanup:
