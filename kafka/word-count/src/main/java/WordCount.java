@@ -52,6 +52,8 @@ public final class WordCount {
 		final KStream<String, String> source = builder.stream(INPUT_TOPIC);
 
 		source
+				// Print stream
+				.peek((key, value) -> logger.info("source: {}:{}", key, value))
 				// Split each text line, by whitespace, into words, skip empty words
 				.flatMapValues(value -> Arrays.stream(value.toLowerCase(Locale.getDefault()).split(" "))
 						.filter(s -> !s.isEmpty()).collect(Collectors.toList()))
@@ -61,6 +63,8 @@ public final class WordCount {
 				.count()
 				// KTable to KStream
 				.toStream()
+				// Print stream
+				.peek((key, value) -> logger.info("output: {}:{}", key, value))				
 				// need to override value serde to Long type
 				.to(OUTPUT_TOPIC, Produced.with(Serdes.String(), Serdes.Long()));
 

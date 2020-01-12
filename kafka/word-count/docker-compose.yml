@@ -16,3 +16,10 @@ services:
       KAFKA_CREATE_TOPICS: 'chat:2:1,word-count:1:1:compact'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+
+  word-count:
+    build: .
+    environment:
+      BOOTSTRAP_SERVERS: kafka:9092
+      INPUT_TOPIC: chat
+      OUTPUT_TOPIC: word-count
