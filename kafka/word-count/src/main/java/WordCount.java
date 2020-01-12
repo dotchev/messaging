@@ -3,10 +3,14 @@
  */
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.kafka.clients.admin.AdminClient;
+import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
@@ -39,7 +43,9 @@ public final class WordCount {
 
 	private static final Logger logger = LoggerFactory.getLogger(WordCount.class);
 
-	public static void main(final String[] args) {
+	public static void main(final String[] args) throws Exception {
+		waitForTopics();
+
 		Properties props = new Properties();
 		props.put(StreamsConfig.APPLICATION_ID_CONFIG, "word-count");
 		props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
@@ -64,7 +70,7 @@ public final class WordCount {
 				// KTable to KStream
 				.toStream()
 				// Print stream
-				.peek((key, value) -> logger.info("output: {}:{}", key, value))				
+				.peek((key, value) -> logger.info("output: {}:{}", key, value))
 				// need to override value serde to Long type
 				.to(OUTPUT_TOPIC, Produced.with(Serdes.String(), Serdes.Long()));
 
@@ -78,5 +84,21 @@ public final class WordCount {
 		}));
 
 		streams.start();
+	}
+
+	private static void waitForTopics() throws Exception {
+		Properties props = new Properties();
+		props.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
+
+		List<String> topicList = Arrays.asList(INPUT_TOPIC, OUTPUT_TOPIC);
+		logger.info("Waiting for topics {}...", topicList);
+		AdminClient client = AdminClient.create(props);
+		while (true) {
+			Set<String> allTopics = client.listTopics().names().get();
+			if (allTopics.containsAll(topicList)) {
+				return;
+			}
+			Thread.sleep(1000);
+		}
 	}
 }
