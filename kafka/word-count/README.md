@@ -77,6 +77,46 @@ The output topic partition is selected based on the message key, which is the wo
 Kafka automatically reassigns partitions across available application instances.
 This provides stream processors with scalability and fault tolerance.
 
+You can find int eh application log a description of the processing topology.
+It looks something like this:
+```
+word-count_1  | Topologies:
+word-count_1  |    Sub-topology: 0
+word-count_1  |     Source: KSTREAM-SOURCE-0000000000 (topics: [chat])
+word-count_1  |       --> KSTREAM-PEEK-0000000001
+word-count_1  |     Processor: KSTREAM-PEEK-0000000001 (stores: [])
+word-count_1  |       --> KSTREAM-FLATMAPVALUES-0000000002
+word-count_1  |       <-- KSTREAM-SOURCE-0000000000
+word-count_1  |     Processor: KSTREAM-FLATMAPVALUES-0000000002 (stores: [])
+word-count_1  |       --> KSTREAM-KEY-SELECT-0000000003
+word-count_1  |       <-- KSTREAM-PEEK-0000000001
+word-count_1  |     Processor: KSTREAM-KEY-SELECT-0000000003 (stores: [])
+word-count_1  |       --> KSTREAM-FILTER-0000000007
+word-count_1  |       <-- KSTREAM-FLATMAPVALUES-0000000002
+word-count_1  |     Processor: KSTREAM-FILTER-0000000007 (stores: [])
+word-count_1  |       --> KSTREAM-SINK-0000000006
+word-count_1  |       <-- KSTREAM-KEY-SELECT-0000000003
+word-count_1  |     Sink: KSTREAM-SINK-0000000006 (topic: KSTREAM-AGGREGATE-STATE-STORE-0000000004-repartition)
+word-count_1  |       <-- KSTREAM-FILTER-0000000007
+word-count_1  | 
+word-count_1  |   Sub-topology: 1
+word-count_1  |     Source: KSTREAM-SOURCE-0000000008 (topics: [KSTREAM-AGGREGATE-STATE-STORE-0000000004-repartition])
+word-count_1  |       --> KSTREAM-AGGREGATE-0000000005
+word-count_1  |     Processor: KSTREAM-AGGREGATE-0000000005 (stores: [KSTREAM-AGGREGATE-STATE-STORE-0000000004])
+word-count_1  |       --> KTABLE-TOSTREAM-0000000009
+word-count_1  |       <-- KSTREAM-SOURCE-0000000008
+word-count_1  |     Processor: KTABLE-TOSTREAM-0000000009 (stores: [])
+word-count_1  |       --> KSTREAM-PEEK-0000000010
+word-count_1  |       <-- KSTREAM-AGGREGATE-0000000005
+word-count_1  |     Processor: KSTREAM-PEEK-0000000010 (stores: [])
+word-count_1  |       --> KSTREAM-SINK-0000000011
+word-count_1  |       <-- KTABLE-TOSTREAM-0000000009
+word-count_1  |     Sink: KSTREAM-SINK-0000000011 (topic: word-count)
+word-count_1  |       <-- KSTREAM-PEEK-0000000010
+```
+Each sub-topology represents independent processing, which can be performed in a separate process.
+Sub-topologies communicate via a Kafka topic (KSTREAM-AGGREGATE-STATE-STORE-0000000004-repartition).
+
 Check the partition assignments across consumer instances:
 ```sh
 docker-compose exec kafka kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe --all-groups
