@@ -2,10 +2,18 @@
 Messaging course
 
 ## Prerequisites
-* Recent version of docker
+* Docker
+* Java
+* Maven
 
 ## Examples
+
 ### RabbitMQ
 * [Worker Queue](rabbitmq/worker-queue)
 * [Publish/Subscribe](rabbitmq/pub-sub)
 * [Topics](rabbitmq/topics)
+
+## Kafka
+* [Quickstart](kafka/quickstart)
+* [Consumer Group](kafka/consumer-group)
+* [Streams](kafka/word-count)
