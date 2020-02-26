@@ -8,11 +8,6 @@ See https://kafka.apache.org/documentation/streams/ for details.
 This example splits each message from the input topic into words and
 writes the word counts into the output topic.
 
-Requirements:
-* Docker
-* Java
-* Maven
-
 Build the example code:
 ```sh
 mvn package
@@ -40,7 +35,7 @@ The following topics are created automatically:
 * `chat` - this is the input topic, it consists of 2 partitions
 * `word-count` - this is the output topic, it is configured with log compaction
 
-In a few seconds when the start is complete.
+Wait until the start is complete.
 
 Start the producer in a separate console:
 ```sh
@@ -77,8 +72,8 @@ The output topic partition is selected based on the message key, which is the wo
 Kafka automatically reassigns partitions across available application instances.
 This provides stream processors with scalability and fault tolerance.
 
-You can find int eh application log a description of the processing topology.
-It looks something like this:
+You can find in the beginning of the application log a description of the processing topology.
+It looks like this:
 ```
 word-count_1  | Topologies:
 word-count_1  |    Sub-topology: 0

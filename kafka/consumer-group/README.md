@@ -3,11 +3,6 @@
 Kafka can distribute the load across consumer instances using consumer groups.
 See https://kafka.apache.org/intro#intro_consumers for details.
 
-Requirements:
-* Docker
-* Java
-* Maven
-
 Build the example code:
 ```sh
 mvn package -f ../pom.xml
