@@ -13,7 +13,7 @@ Messaging course
 * [Publish/Subscribe](rabbitmq/pub-sub)
 * [Topics](rabbitmq/topics)
 
-## Kafka
+### Kafka
 * [Quickstart](kafka/quickstart)
 * [Consumer Group](kafka/consumer-group)
 * [Publish/Subscribe](kafka/pub-sub)
