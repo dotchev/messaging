@@ -16,4 +16,5 @@ Messaging course
 ## Kafka
 * [Quickstart](kafka/quickstart)
 * [Consumer Group](kafka/consumer-group)
+* [Publish/Subscribe](kafka/pub-sub)
 * [Streams](kafka/word-count)
